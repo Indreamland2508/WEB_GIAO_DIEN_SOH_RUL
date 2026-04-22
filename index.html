@@ -5,21 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMS AI Dashboard | Quản lý Sức khỏe Pin</title>
     <style>
+        /* Bảng màu High-Tech Dark Mode */
         :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg-color: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --safe: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+            --bg-dark: #070b19;
+            --card-bg: rgba(16, 23, 42, 0.75);
+            --border-glow: #0ea5e9;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --input-bg: rgba(2, 6, 23, 0.8);
+            
+            /* Màu Neon Cảnh báo */
+            --neon-safe: #10b981;
+            --neon-warning: #f59e0b;
+            --neon-danger: #ef4444;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Tạo nền lưới Grid công nghệ */
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
             color: var(--text-main);
             display: flex;
             justify-content: center;
@@ -32,203 +40,253 @@
 
         .dashboard-card {
             background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             width: 100%;
             max-width: 480px;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            padding: 40px 35px;
+            border-radius: 16px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            box-shadow: 0 0 30px rgba(14, 165, 233, 0.1),
+                        inset 0 0 20px rgba(14, 165, 233, 0.05);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            position: relative;
         }
 
         .header h2 {
             margin: 0;
-            font-size: 24px;
-            color: var(--text-main);
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
         }
 
         .header p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            color: var(--text-muted);
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: var(--border-glow);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .input-group label {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--text-main);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .input-group input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
+            padding: 14px 15px;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 8px;
             font-size: 16px;
+            color: #fff;
+            background-color: var(--input-bg);
             transition: all 0.3s ease;
             box-sizing: border-box;
-            background-color: #f8fafc;
+            font-family: 'Courier New', Courier, monospace; /* Font số kỹ thuật */
         }
 
         .input-group input:focus {
             outline: none;
-            border-color: var(--primary);
-            background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: var(--border-glow);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
         }
 
         .btn-submit {
             width: 100%;
-            padding: 14px;
-            background-color: var(--primary);
+            padding: 16px;
+            background: linear-gradient(45deg, #0284c7, #3b82f6);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
         }
 
         .btn-submit:hover {
-            background-color: var(--primary-hover);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px);
         }
 
         .btn-submit:disabled {
-            background-color: #94a3b8;
+            background: #334155;
+            box-shadow: none;
+            color: #94a3b8;
             cursor: not-allowed;
+            transform: translateY(0);
         }
 
         /* Khu vực kết quả */
         .result-container {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px dashed #cbd5e1;
-            display: none; /* Ẩn khi chưa có kết quả */
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
             text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .soh-value {
-            font-size: 48px;
-            font-weight: 800;
-            margin: 10px 0;
+            font-size: 56px;
+            font-weight: 900;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace; /* Font điện tử */
             line-height: 1;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1.5px;
+            border: 1px solid transparent;
         }
 
-        /* Thanh tiến trình (Progress Bar) */
+        /* Thanh tiến trình Neon */
         .progress-bg {
             width: 100%;
-            height: 12px;
-            background-color: #e2e8f0;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 25px;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .progress-fill {
             height: 100%;
             width: 0%;
             border-radius: 10px;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease;
+            transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.5s ease;
         }
 
-        /* Bảng màu Trạng thái */
-        .theme-safe .soh-value { color: var(--safe); }
-        .theme-safe .status-badge { background-color: #d1fae5; color: var(--safe); }
-        .theme-safe .progress-fill { background-color: var(--safe); }
+        /* --- THEME SAFE (XANH NEON) --- */
+        .theme-safe .soh-value { 
+            color: #34d399; 
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.6); 
+        }
+        .theme-safe .status-badge { 
+            background-color: rgba(16, 185, 129, 0.1); 
+            color: #34d399; 
+            border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+        .theme-safe .progress-fill { 
+            background-color: #34d399; 
+            box-shadow: 0 0 10px #34d399;
+        }
 
-        .theme-warning .soh-value { color: var(--warning); }
-        .theme-warning .status-badge { background-color: #fef3c7; color: var(--warning); }
-        .theme-warning .progress-fill { background-color: var(--warning); }
+        /* --- THEME WARNING (VÀNG NEON) --- */
+        .theme-warning .soh-value { 
+            color: #fbbf24; 
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.6); 
+        }
+        .theme-warning .status-badge { 
+            background-color: rgba(245, 158, 11, 0.1); 
+            color: #fbbf24; 
+            border-color: rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+        }
+        .theme-warning .progress-fill { 
+            background-color: #fbbf24; 
+            box-shadow: 0 0 10px #fbbf24;
+        }
 
-        .theme-danger .soh-value { color: var(--danger); }
-        .theme-danger .status-badge { background-color: #fee2e2; color: var(--danger); }
-        .theme-danger .progress-fill { background-color: var(--danger); }
+        /* --- THEME DANGER (ĐỎ NEON) --- */
+        .theme-danger .soh-value { 
+            color: #f87171; 
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.6); 
+        }
+        .theme-danger .status-badge { 
+            background-color: rgba(239, 68, 68, 0.1); 
+            color: #f87171; 
+            border-color: rgba(239, 68, 68, 0.5);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+        .theme-danger .progress-fill { 
+            background-color: #f87171; 
+            box-shadow: 0 0 10px #f87171;
+        }
     </style>
 </head>
 <body>
 
     <div class="dashboard-card">
         <div class="header">
-            <h2>Hệ thống Quản lý Pin (BMS)</h2>
-            <p>Dự báo SOH bằng AI (Random Forest)</p>
+            <h2>Quản lý Sức khỏe Pin</h2>
+            <p>Hệ thống AI - Random Forest</p>
         </div>
 
         <div class="input-group">
-            <label for="cycle">Số chu kỳ vận hành (Cycle):</label>
-            <input type="number" id="cycle" value="120" min="1" placeholder="Nhập số chu kỳ...">
+            <label for="cycle">Số chu kỳ vận hành (Cycle)</label>
+            <input type="number" id="cycle" value="120" min="1">
         </div>
 
         <div class="input-group">
-            <label for="temp">Nhiệt độ môi trường (°C):</label>
-            <input type="number" id="temp" value="35.0" step="0.1" placeholder="Nhập nhiệt độ...">
+            <label for="temp">Nhiệt độ môi trường (°C)</label>
+            <input type="number" id="temp" value="35.0" step="0.1">
         </div>
 
         <div class="input-group">
-            <label for="gradient">Độ dốc nhiệt độ (°C/chu kỳ):</label>
-            <input type="number" id="gradient" value="1.5" step="0.1" placeholder="Nhập độ dốc nhiệt...">
+            <label for="gradient">Độ dốc nhiệt độ (°C/chu kỳ)</label>
+            <input type="number" id="gradient" value="1.5" step="0.1">
         </div>
 
-        <button id="submitBtn" class="btn-submit" onclick="predictSOH()">🚀 Chẩn đoán AI ngay</button>
+        <button id="submitBtn" class="btn-submit" onclick="predictSOH()">Khởi động quét AI</button>
 
         <div id="resultBox" class="result-container">
-            <div id="statusBadge" class="status-badge">Đang xử lý</div>
+            <div id="statusBadge" class="status-badge">SYSTEM STANDBY</div>
             <div id="sohValue" class="soh-value">--%</div>
             
             <div class="progress-bg">
                 <div id="progressFill" class="progress-fill"></div>
             </div>
-            <p style="font-size: 13px; color: var(--text-muted); margin-top: 15px;">Mức SOH hiện tại của pin so với dung lượng thiết kế ban đầu.</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 15px; letter-spacing: 0.5px;">*Tỷ lệ SOH so với thiết kế xuất xưởng của NASA</p>
         </div>
     </div>
 
     <script>
-        // QUAN TRỌNG: Hãy chèn lại đường link Render của bạn vào biến này
+        // DÁN LẠI ĐƯỜNG LINK RENDER CỦA BẠN VÀO ĐÂY:
         const API_URL = 'https://rul-soh-predictions.onrender.com/predict';
 
         async function predictSOH() {
             const btn = document.getElementById('submitBtn');
             const resultBox = document.getElementById('resultBox');
             
-            // Lấy dữ liệu
             const payload = {
                 cycle: document.getElementById('cycle').value,
                 temp: document.getElementById('temp').value,
                 gradient: document.getElementById('gradient').value
             };
 
-            // Đổi trạng thái nút bấm thành Loading
             btn.disabled = true;
-            btn.innerText = "⏳ Đang tính toán...";
+            btn.innerText = "ĐANG PHÂN TÍCH DỮ LIỆU...";
 
             try {
-                // Gọi API
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -238,19 +296,15 @@
                 const data = await response.json();
                 
                 if(data.success) {
-                    // Hiển thị khung kết quả
                     resultBox.style.display = 'block';
                     
-                    // Cập nhật số liệu
                     const soh = data.soh_value;
                     document.getElementById('sohValue').innerText = soh + "%";
-                    document.getElementById('statusBadge').innerText = data.status;
+                    document.getElementById('statusBadge').innerText = "Trạng thái: " + data.status;
                     
-                    // Cập nhật thanh chạy
                     document.getElementById('progressFill').style.width = soh + "%";
 
-                    // Đổi màu sắc giao diện theo trạng thái
-                    resultBox.className = "result-container"; // Reset class
+                    resultBox.className = "result-container"; 
                     if (data.status === "AN TOÀN") {
                         resultBox.classList.add("theme-safe");
                     } else if (data.status === "CẢNH BÁO") {
@@ -259,14 +313,13 @@
                         resultBox.classList.add("theme-danger");
                     }
                 } else {
-                    alert("Lỗi máy chủ AI: " + data.error);
+                    alert("LỖI HỆ THỐNG: " + data.error);
                 }
             } catch (error) {
-                alert("Không thể kết nối đến Máy chủ AI. Vui lòng kiểm tra lại đường link Render!");
+                alert("Mất kết nối với máy chủ AI. Vui lòng thử lại!");
             } finally {
-                // Khôi phục nút bấm
                 btn.disabled = false;
-                btn.innerText = "🚀 Chẩn đoán AI ngay";
+                btn.innerText = "Khởi động quét AI";
             }
         }
     </script>
